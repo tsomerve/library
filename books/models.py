@@ -12,4 +12,6 @@ class Author(models.Model):
     last_name = models.CharField(max_length=60)
 
 class Book(models.Model):
-    
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name = 'books')
+    title = models.CharField(max_length=100)
+    published = models.DateField()
