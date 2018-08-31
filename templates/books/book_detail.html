@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ book.title }}</h1>
+<form>
+<input type="checkbox" name="checkout" value="checkout" checked> CheckOut<br>
+<input type="checkbox" name="checkin" value="checkin"> CheckIn<br>
+<input type="submit" value="Submit" checked>
+</form>
+{% endblock content %}

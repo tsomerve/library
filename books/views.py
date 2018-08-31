@@ -1,16 +1,24 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from django.views.generic import TemplateView, ListView
-from .models import Checkout
+from .models import Book
 
-class HomePageView(TemplateView):
-    template_name = 'books/home.html'
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'books/book_list.html', {'books': books})
 
-class AboutPageView(TemplateView):
-    template_name = 'books/about.html'
+def book_detail(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    return render(request, 'books/book_detail.html', {'book': book})
 
-class CheckoutPageView(TemplateView):
-    template_name = 'books/Checkout.html'
+def check_out(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        book.checked_out = True
+        book.save()
+    return redirect('book_detail', pk=book.pk)
 
-class CheckInPageView(TemplateView):
-    pass
+def check_in(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == 'POST':
+        book.checked_in = False
+        book.save()
+    return redirect('book_detail', pk=book.pk)
