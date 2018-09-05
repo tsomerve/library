@@ -2,9 +2,15 @@
 
 {% block content %}
 <h1>{{ book.title }}</h1>
-<form>
-<input type="checkbox" name="checkout" value="checkout" checked> CheckOut<br>
-<input type="checkbox" name="checkin" value="checkin"> CheckIn<br>
-<input type="submit" value="Submit" checked>
+{% if not book.checked_out %}
+<form method="POST" action="{% url 'check_out' pk=book.pk %}">
+    {% csrf_token %}
+    <button>Check Out</button>
 </form>
+{% else %}
+<form method="POST" action="{% url 'check_in' pk=book.pk %}">
+    {% csrf_token %}
+    <button>Check In</button>
+</form>
+{% endif %}
 {% endblock content %}

@@ -19,6 +19,6 @@ def check_out(request, pk):
 def check_in(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
-        book.checked_in = False
+        book.checked_out = False
         book.save()
     return redirect('book_detail', pk=book.pk)
